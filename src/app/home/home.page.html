@@ -1,20 +1,99 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title>Data Pahlawan</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-item (click)="logout()">
+    <ion-icon slot="start" ios="exit-outline" md="exit-sharp"></ion-icon>
+    <ion-label>Logout</ion-label>
+  </ion-item>
+  <hr>
+  Selamat datang {{ nama }}
+
+  <ion-card>
+    <ion-button (click)="openModalTambah(true)" expand="block">Tambah Pahlawan</ion-button>
+  </ion-card>
+  <!-- modal tambah -->
+  <ion-modal [isOpen]="modalTambah" (ionModalDidDismiss)="cancel()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Batal</ion-button>
+          </ion-buttons>
+          <ion-title>Tambah Pahlawan</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-input label="Nama Pahlawan" labelPlacement="floating" required [(ngModel)]="nama_pahlawan"
+            placeholder="Masukkan Nama Pahlawan" type="text">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label='Kisah' labelPlacement="floating" required [(ngModel)]="kisah" placeholder="Masukkan Kisah"
+            type="text">
+          </ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-button type="button" (click)="tambahPahlawan()" color="primary" shape="full" expand="block">Tambah
+              Pahlawan
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- ini untuk modal edit -->
+  <ion-modal [isOpen]="modalEdit" (ionModalDidDismiss)="cancel()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Batal</ion-button>
+          </ion-buttons>
+          <ion-title>Edit Pahlawan</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-input label="Nama Pahlawan" labelPlacement="floating" required [(ngModel)]="nama_pahlawan"
+            placeholder="Masukkan Nama Pahlawan" type="text">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input label='Kisah' labelPlacement="floating" required [(ngModel)]="kisah" placeholder="Masukkan Kisah"
+            type="text">
+          </ion-input>
+        </ion-item>
+        <ion-input required [(ngModel)]="id" type="hidden">
+        </ion-input>
+        <ion-row>
+          <ion-col>
+            <ion-button type="button" (click)="editPahlawan()" color="primary" shape="full" expand="block">Edit
+              Pahlawan
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-card *ngFor="let item of dataPahlawan">
+    <ion-item>
+      <ion-label>
+        {{item.nama_pahlawan}}
+        <p>{{item.kisah}}</p>
+      </ion-label>
+      <ion-button color="danger" slot="end" (click)="hapusPahlawan(item.id)">Hapus</ion-button>
+      <ion-button expand="block" (click)="openModalEdit(true,item.id)">Edit</ion-button>
+    </ion-item>
+  </ion-card>
+
+  <!-- button tambah -->
+
 </ion-content>
