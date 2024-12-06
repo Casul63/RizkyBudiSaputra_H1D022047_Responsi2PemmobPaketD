@@ -1,0 +1,7 @@
+{
+  "name": "pahlawan",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
